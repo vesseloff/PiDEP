@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Веселов Даниэль">
+    <title>PiDEP — Вход</title>
+<style>
+/* ===== ОБЩИЙ СБРОС ===== */
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    height: 100%;
+    background: linear-gradient(to bottom, #800020 67%, #000000);
+    font-family: Arial, Helvetica, sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+a {
+    text-decoration: none;
+}
+
+/* ===== ЛОГОТИПЫ ===== */
+#logos{
+    height: 100px;
+    width: 80px;
+    margin-top: 9px;
+}
+
+/* ===== АНИМАЦИЯ НЕОНА ===== */
+@keyframes neon-blink {
+    0%, 100% { text-shadow: 0 0 5px gold, 0 0 10px gold, 0 0 15px gold; }
+    50%       { text-shadow: 0 0 10px gold, 0 0 20px gold, 0 0 40px gold; }
+}
+
+/* ===== ПОДВАЛ ===== */
+#footer {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+    padding: 60px 0 40px;
+    margin-top: 80px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    flex-wrap: wrap;
+    gap: 20px;
+}
+#footer a {
+    color: rgb(84, 201, 255);
+    text-decoration: none;
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    transition: color 0.15s;
+}
+#footer a:hover {
+    text-decoration: underline;
+    color: gold;
+}
+#footer_first, #footer_second, #footer_third, #footer_logo {
+    margin: 0 30px;
+}
+#footer h4 {
+    color: rgba(255,255,255,0.5);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+}
+#footer_logo {
+    display: flex;
+    align-items: center;
+}
+#footer_logo .logo-text {
+    font-size: 28px;
+    font-weight: 900;
+    color: gold;
+    letter-spacing: -1px;
+    user-select: none;
+}
+#footer_logo .logo-text span { color: #fff; }
+
+/* ===== СТИЛИ СТРАНИЦЫ ВХОДА ===== */
+#auth-page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+}
+.auth-logo {
+    font-size: 48px;
+    font-weight: 900;
+    color: goldenrod;
+    letter-spacing: -2px;
+    margin-bottom: 20px;
+    cursor: pointer;
+    text-decoration: none;
+}
+.auth-logo span { color: white; }
+#auth-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 24px;
+    padding: 40px 40px 32px;
+    width: 380px;
+    max-width: 100%;
+}
+h2 { color: white; font-size: 24px; text-align: center; margin-bottom: 12px; }
+.switch-btn {
+    display: block;
+    width: 100%;
+    height: 36px;
+    background: none;
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 10px;
+    color: rgba(255,255,255,0.55);
+    font-size: 14px;
+    cursor: pointer;
+    margin-bottom: 24px;
+    transition: all 0.15s;
+}
+.switch-btn:hover { border-color: goldenrod; color: goldenrod; }
+.form-group { margin-bottom: 16px; }
+.form-group label { display: block; color: rgba(255,255,255,0.6); font-size: 13px; margin-bottom: 6px; }
+.form-group input {
+    width: 100%;
+    height: 44px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 12px;
+    color: white;
+    font-size: 15px;
+    padding: 0 14px;
+    outline: none;
+    transition: border-color 0.15s;
+    box-sizing: border-box;
+}
+.form-group input:focus { border-color: goldenrod; }
+.form-group input::placeholder { color: rgba(255,255,255,0.3); }
+.pw-wrap { position: relative; }
+.pw-wrap input { padding-right: 44px; }
+.pw-eye {
+    position: absolute;
+    right: 12px; top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    color: rgba(255,255,255,0.6);
+}
+.forgot-link {
+    text-align: right;
+    color: rgba(100,180,255,0.8);
+    font-size: 13px;
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+.forgot-link:hover { text-decoration: underline; }
+#si_button {
+    width: 100%;
+    height: 48px;
+    background: goldenrod;
+    border: none;
+    border-radius: 14px;
+    color: white;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.15s;
+    margin-bottom: 16px;
+}
+#si_button:hover { background: gold; }
+#We {
+    display: block;
+    text-align: center;
+    color: rgba(100,180,255,0.7);
+    font-size: 13px;
+}
+#We:hover { text-decoration: underline; }
+
+</style>
+</head>
+<body>
+
+<div id="auth-page">
+    <a href="Main_page_PDEP.html"><div class="auth-logo">Pi<span>DEP</span></div></a>
+    <div id="auth-card">
+        <h2>Вход в аккаунт</h2>
+        <a href="Registration_page_PDEP.html"><button class="switch-btn">Нет аккаунта? Регистрация →</button></a>
+
+        <div class="form-group">
+            <label>Почта</label>
+            <input type="email" placeholder="ivan@mail.com" maxlength="40">
+        </div>
+        <div class="form-group">
+            <label>Никнейм</label>
+            <input type="text" placeholder="ivan777" maxlength="20">
+        </div>
+        <div class="form-group">
+            <label>ID</label>
+            <input type="text" placeholder="@12345678" maxlength="20">
+        </div>
+        <div class="form-group">
+            <label>Пароль</label>
+            <div class="pw-wrap">
+                <input type="password" id="pw" placeholder="••••••••" maxlength="50">
+                <button class="pw-eye" onclick="togglePw('pw',this)" type="button">👁️</button>
+            </div>
+        </div>
+
+        <div class="forgot-link" onclick="alert('Функция восстановления пароля будет доступна позже.')">Забыли пароль?</div>
+        <a href="Main_page_PDEP.html"><button id="si_button">Войти</button></a>
+        <a href="FAQ.html" id="We">О нас и почему нам можно доверять</a>
+    </div>
+</div>
+
+<footer id="footer">
+    <div id="footer_first">
+        <h4>О проекте</h4>
+        <a href="FAQ.html">О нас</a>
+        <a href="FAQ.html">FAQ</a>
+        <a href="#">Партнеры</a>
+    </div>
+    <div id="footer_second">
+        <h4>Документы</h4>
+        <a href="#">Пользовательское соглашение</a>
+        <a href="#">Правила и условия</a>
+        <a href="#">Политика возврата</a>
+    </div>
+    <div id="footer_third">
+        <h4>Контакты</h4>
+        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=danielveselov28@gmail.com&su=Обратная%20связь&body=Здравствуйте!">Обратная связь</a>
+        <a href="https://t.me/pidepcasino" target="_blank">Telegram-канал</a>
+    </div>
+    <div id="footer_logo">
+        <a href="Main_page_PDEP.html"><div class="logo-text"><img id="logos" src="images/goldDEPlogo.svg" alt="PiDEP"></div></a>
+    </div>
+</footer>
+
+<script>
+function togglePw(id, btn) {
+    const el = document.getElementById(id);
+    if (el.type === 'password') {
+        el.type = 'text';
+        btn.textContent = '🙈';
+    } else {
+        el.type = 'password';
+        btn.textContent = '👁️';
+    }
+}
+</script>
+
+</body>
+</html>

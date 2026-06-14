@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Веселов Даниэль">
+    <meta name="description" content="Главная страница PiDEP — онлайн казино">
+    <meta name="keywords" content="casino,money,slots,games,cards,poker,blackjack,bingo">
+    <title>PiDEP — Главная</title>
+    <link rel="stylesheet" href="common.css">
+    <style>
+/* ===== СЛАЙДЕР ===== */
+.slider {
+    width: 92%;
+    max-width: 1350px;
+    margin: 50px auto 60px;
+    border-radius: 30px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 4px 30px rgba(0,0,0,0.5);
+}
+.slides {
+    display: flex;
+    width: 400%;
+    animation: slide 12s infinite;
+}
+.slide-placeholder {
+    width: 25%;
+    height: 320px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+.slide-text {
+    text-align: center;
+    color: white;
+}
+.slide-text h2 {
+    font-size: 36px;
+    margin-bottom: 10px;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+}
+.slide-text p {
+    font-size: 18px;
+    opacity: 0.85;
+}
+.slide-dots {
+    position: absolute;
+    bottom: 14px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+}
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.4);
+    transition: background 0.3s;
+}
+.dot.active { background: white; }
+@keyframes slide {
+    0%   { transform: translateX(0); }
+    20%  { transform: translateX(0); }
+    25%  { transform: translateX(-25%); }
+    45%  { transform: translateX(-25%); }
+    50%  { transform: translateX(-50%); }
+    70%  { transform: translateX(-50%); }
+    75%  { transform: translateX(-75%); }
+    95%  { transform: translateX(-75%); }
+    100% { transform: translateX(0); }
+}
+ 
+/* ===== ОБЩИЕ СТИЛИ СЕКЦИЙ ===== */
+#games_online, #games_slots, #games_with_bots, #promotions, #news {
+    width: 92%;
+    max-width: 1350px;
+    margin: 0 auto 80px;
+}
+ 
+.caption {
+    color: white;
+    font-size: 28px;
+    margin-bottom: 24px;
+    text-shadow: 0 0 5px gold, 0 0 15px gold;
+    animation: neon-blink 2s infinite alternate;
+}
+ 
+/* ===== СЕТКА ИГР (8 штук) ===== */
+.games-grid, .games-grid-4 {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 50px;
+}
+.games-grid a, .games-grid-4 a {
+    display: block;
+}
+.game-block {
+    width: 300px !important;
+    height: 200px !important;
+    min-width: 300px;
+    min-height: 200px;
+    max-width: 300px;
+    max-height: 200px;
+    flex: 0 0 300px;
+    box-sizing: border-box;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: box-shadow 0.2s, transform 0.15s;
+    display: flex;
+    align-items: flex-end;
+    padding: 16px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.4);
+    position: relative;
+    overflow: hidden;
+}
+.game-block::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0);
+    transition: background 0.2s;
+}
+.game-block:hover {
+    box-shadow: 0 0 20px gold;
+    transform: translateY(-3px);
+}
+.game-block:hover::before {
+    background: rgba(255,255,255,0.05);
+}
+/* ===== ФОНОВЫЕ ИЗОБРАЖЕНИЯ ИГР ===== */
+.game-block {
+    background-size: cover;
+    background-position: center;
+}
+.img-poker     { background-image: linear-gradient(135deg, rgba(26,71,42,0.55), rgba(13,38,20,0.65)), url('images/poker.png'); }
+.img-blackjack { background-image: linear-gradient(135deg, rgba(26,26,110,0.55), rgba(10,10,58,0.65)), url('images/bj.png'); }
+.img-wheel     { background-image: linear-gradient(135deg, rgba(110,26,26,0.55), rgba(58,13,13,0.65)), url('images/wheel.png'); }
+.img-roulette  { background-image: linear-gradient(135deg, rgba(26,90,26,0.55), rgba(10,42,10,0.65)), url('images/roulett.png'); }
+.img-bingo     { background-image: linear-gradient(135deg, rgba(90,26,90,0.55), rgba(42,10,42,0.65)), url('images/bingo.png'); }
+.img-baccara   { background-image: linear-gradient(135deg, rgba(90,58,26,0.55), rgba(42,26,10,0.65)), url('images/baccarat.png'); }
+.img-craps     { background-image: linear-gradient(135deg, rgba(26,58,90,0.55), rgba(10,26,42,0.65)), url('images/creps.png'); }
+.img-keno      { background-image: linear-gradient(135deg, rgba(58,26,110,0.55), rgba(26,10,58,0.65)), url('images/keno.png'); }
+.img-slot1     { background-image: linear-gradient(135deg, rgba(110,74,26,0.55), rgba(58,42,10,0.65)), url('images/b3.jpg'); }
+.img-slot2     { background-image: linear-gradient(135deg, rgba(26,110,74,0.55), rgba(10,58,42,0.65)), url('images/b5.jpg'); }
+.img-slot3     { background-image: linear-gradient(135deg, rgba(74,26,110,0.55), rgba(42,10,58,0.65)), url('images/b9.jpg'); }
+.img-slot4     { background-image: linear-gradient(135deg, rgba(110,26,74,0.55), rgba(58,10,42,0.65)), url('images/b20.jpg'); }
+ 
+.game-label {
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.8);
+    position: relative;
+    z-index: 1;
+}
+ 
+/* ===== АКЦИИ ===== */
+.promo-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+.promo {
+    border-radius: 20px;
+    height: 180px;
+    cursor: pointer;
+    transition: box-shadow 0.2s, transform 0.15s;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.4);
+    position: relative;
+    overflow: hidden;
+}
+.promo:hover {
+    box-shadow: 0 0 20px gold;
+    transform: translateY(-3px);
+}
+.promo-content {
+    padding: 24px;
+    color: white;
+}
+.promo-content h3 {
+    font-size: 20px;
+    margin-bottom: 8px;
+}
+.promo-content p {
+    font-size: 14px;
+    opacity: 0.85;
+}
+.promo-badge {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 8px;
+    padding: 4px 10px;
+    font-size: 13px;
+    font-weight: bold;
+    color: white;
+    backdrop-filter: blur(4px);
+}
+ 
+/* ===== НОВОСТИ ===== */
+#news-inner {
+    display: flex;
+    gap: 30px;
+    align-items: flex-start;
+}
+#news-img-placeholder {
+    width: 500px;
+    min-height: 320px;
+    flex-shrink: 0;
+    border-radius: 30px;
+    background: linear-gradient(135deg, #3a0010, #1a0050);
+    box-shadow: 0 2px 20px rgba(0,0,0,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 100px;
+}
+#news_text {
+    color: white;
+    font-size: 17px;
+    line-height: 1.7;
+    flex: 1;
+}
+#news_text p {
+    color: rgba(255,255,255,0.9);
+    margin-bottom: 16px;
+}
+#news_button {
+    margin-top: 20px;
+    padding: 12px 30px;
+    background: goldenrod;
+    border: none;
+    border-radius: 25px;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.1s;
+}
+#news_button:hover {
+    background: gold;
+    transform: scale(1.03);
+}
+ 
+    </style>
+</head>
+<body>
+<!-- header.js вставит шапку сюда -->
+ 
+<audio id="suc" autoplay loop>
+    <source src="suc.mp3" type="audio/mpeg">
+    Ваш браузер не поддерживает встроенный звук.
+</audio>
+<script>
+    var audio = document.getElementById("suc");
+    audio.volume = 0.2;
+</script>
+ 
+<div class="page-content">
+ 
+    <!-- СЛАЙДЕР (плейсхолдеры, т.к. оригинальные картинки недоступны) -->
+    <div class="slider">
+        <div class="slides">
+            <div class="slide-placeholder" style="background:linear-gradient(135deg,#93ff65,#003a2b);">
+                <div class="slide-text"><h2>Добро пожаловать в PiDEP</h2><p>Лучшее онлайн-казино</p></div>
+            </div>
+            <div class="slide-placeholder" style="background:linear-gradient(135deg,#800020,#3a0010);">
+                <img src="images/bigwin.svg" alt="">
+            </div>
+            <div class="slide-placeholder" style="background:linear-gradient(135deg,#1a1a6e,#800020);">
+                 <img src="images/sydney.svg" alt="">
+            </div>
+            <div class="slide-placeholder" style="background-color: rgba(96, 30, 42, 1);">
+                <img src="images/strange.svg" alt="">
+            </div>
+        </div>
+        <div class="slide-dots">
+            <span class="dot active"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+        </div>
+    </div>
+ 
+    <!-- ОНЛАЙН ИГРЫ -->
+    <div id="games_online">
+        <h2 class="caption">Играть онлайн</h2>
+        <div class="games-grid">
+            <a href="#"><div class="game-block img-poker"><span class="game-label">♠ Покер</span></div></a>
+            <a href="#"><div class="game-block img-blackjack"><span class="game-label">♣ Блэкджек</span></div></a>
+            <a href="#"><div class="game-block img-wheel"><span class="game-label">🎡 Колесо</span></div></a>
+            <a href="#"><div class="game-block img-roulette"><span class="game-label">🎯 Рулетка</span></div></a>
+            <a href="#"><div class="game-block img-bingo"><span class="game-label">🎱 Бинго</span></div></a>
+            <a href="#"><div class="game-block img-baccara"><span class="game-label">🃏 Баккара</span></div></a>
+            <a href="#"><div class="game-block img-craps"><span class="game-label">🎲 Крепс</span></div></a>
+            <a href="#"><div class="game-block img-keno"><span class="game-label">🔢 Кено</span></div></a>
+        </div>
+    </div>
+ 
+    <!-- СЛОТЫ -->
+    <div id="games_slots">
+        <h2 class="caption">Слоты</h2>
+        <div class="games-grid-4">
+            <a href="#"><div class="game-block img-slot1"><span class="game-label">🎰 3 барабана</span></div></a>
+            <a href="#"><div class="game-block img-slot2"><span class="game-label">🎰 5 барабанов</span></div></a>
+            <a href="#"><div class="game-block img-slot3"><span class="game-label">🎰 9 барабанов</span></div></a>
+            <a href="#"><div class="game-block img-slot4"><span class="game-label">🎰 20 барабанов</span></div></a>
+        </div>
+    </div>
+ 
+    <!-- ИГРЫ С БОТАМИ -->
+    <div id="games_with_bots">
+        <h2 class="caption">Играть с ботами</h2>
+        <div class="games-grid">
+            <a href="#"><div class="game-block bot img-poker"><span class="game-label">🤖 Покер</span></div></a>
+            <a href="#"><div class="game-block bot img-blackjack"><span class="game-label">🤖 Блэкджек</span></div></a>
+            <a href="#"><div class="game-block bot img-wheel"><span class="game-label">🤖 Колесо</span></div></a>
+            <a href="#"><div class="game-block bot img-roulette"><span class="game-label">🤖 Рулетка</span></div></a>
+            <a href="#"><div class="game-block bot img-bingo"><span class="game-label">🤖 Бинго</span></div></a>
+            <a href="#"><div class="game-block bot img-baccara"><span class="game-label">🤖 Баккара</span></div></a>
+            <a href="#"><div class="game-block bot img-craps"><span class="game-label">🤖 Крепс</span></div></a>
+            <a href="#"><div class="game-block bot img-keno"><span class="game-label">🤖 Кено</span></div></a>
+        </div>
+    </div>
+ 
+    <!-- АКЦИИ -->
+    <div id="promotions">
+        <h2 class="caption">Акции</h2>
+        <div class="promo-grid">
+            <a href="#"><div class="promo" style="background:linear-gradient(135deg,#6b21a8,#3b0764)">
+                <div class="promo-content">
+                    <h3>Бонус новичка</h3>
+                    <p>100% на первый депозит до 10 000 ₽</p>
+                    <span class="promo-badge">NEW</span>
+                </div>
+            </div></a>
+            <a href="#"><div class="promo" style="background:linear-gradient(135deg,#b45309,#78350f)">
+                <div class="promo-content">
+                    <h3>Кэшбэк 15%</h3>
+                    <p>Возврат 15% от проигрыша каждую неделю</p>
+                    <span class="promo-badge">HOT</span>
+                </div>
+            </div></a>
+            <a href="#"><div class="promo" style="background:linear-gradient(135deg,#be123c,#7f1d1d)">
+                <div class="promo-content">
+                    <h3>Реферальная программа</h3>
+                    <p>500 Pi-коинов за каждого приглашённого друга</p>
+                    <span class="promo-badge">🪙</span>
+                </div>
+            </div></a>
+        </div>
+    </div>
+ 
+    <!-- НОВОСТИ -->
+    <div id="news">
+        <h2 class="caption">Новости</h2>
+        <div id="news-inner">
+            <img id="news-img-placeholder" src="images/max.jpg">
+            <div id="news_text">
+                <p>Макс Ферстаппен выиграл Гран-при Лас-Вегаса 2025 и сократил отставание в чемпионате, догнав Ландо Норриса по очкам. По итогам этапа разрыв между ними составляет 24 очка.</p>
+                <p>Гонка в Неваде стала ключевой в борьбе за титул: победа Ферстаппена позволила ему вернуть инициативу в концовке сезона и максимально обострить интригу в личном зачёте.</p>
+                <p>Впереди — решающие гонки календаря, где любое изменение формы команд, стратегия и работа с шинами могут стать определяющими в споре за чемпионство.</p>
+                <a href="News_page_PDEP.html"><button id="news_button">Читать больше</button></a>
+            </div>
+        </div>
+    </div>
+ 
+</div><!-- /page-content -->
+ 
+<div id="footer"></div>
+ 
+<script src="header.js"></script>
+</body>
+</html>

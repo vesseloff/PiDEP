@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Веселов Даниэль">
+    <meta name="description" content="Магазин PiDEP — фишки, бонусы, косметика">
+    <title>PiDEP — Магазин</title>
+<style>
+/* ===== ОБЩИЙ СБРОС ===== */
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    height: 100%;
+    background: linear-gradient(to bottom, #800020 67%, #000000);
+    font-family: Arial, Helvetica, sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+    padding-top: 80px; /* Отступ для фиксированной шапки */
+}
+
+a {
+    text-decoration: none;
+}
+
+/* ===== АНИМАЦИЯ НЕОНА ===== */
+@keyframes neon-blink {
+    0%, 100% { text-shadow: 0 0 5px gold, 0 0 10px gold, 0 0 15px gold; }
+    50%       { text-shadow: 0 0 10px gold, 0 0 20px gold, 0 0 40px gold; }
+}
+
+/* ===== ШАПКА ===== */
+#header {
+    height: 55px;
+    width: 90%;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.7);
+    background: goldenrod;
+    color: black;
+    margin: 10px 5%;
+    border-radius: 30px;
+    position: fixed;
+    top: 10px;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    z-index: 1000;
+    gap: 6px;
+}
+
+#logos{
+    height: 100px;
+    width: 80px;
+    margin-top: 9px;
+}
+
+#logo-text {
+    font-size: 22px;
+    font-weight: 900;
+    color: #800020;
+    letter-spacing: -1px;
+    cursor: pointer;
+    white-space: nowrap;
+    user-select: none;
+    flex-shrink: 0;
+    margin-right: 4px;
+}
+#logo-text span {
+    color: #000;
+}
+
+/* Кнопки шапки */
+.header-btn {
+    width: 36px;
+    height: 36px;
+    background: none;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: background 0.15s;
+    padding: 0;
+    position: relative;
+}
+.header-btn:hover {
+    background: rgba(255,255,255,0.35);
+}
+.header-btn svg {
+    width: 22px;
+    height: 22px;
+    fill: white;
+    pointer-events: none;
+}
+/* Активная страница */
+.header-btn.active {
+    background: rgba(255,255,255,0.25);
+}
+
+/* Поисковая строка */
+#searching {
+    flex: 1;
+    max-width: 300px;
+    height: 30px;
+    background: rgba(255,255,255,0.3);
+    border-radius: 20px;
+    border: 2px solid rgba(255,255,255,0.6);
+    padding: 0 14px;
+    font-size: 14px;
+    color: #000;
+    outline: none;
+    margin: 0 auto;
+}
+#searching::placeholder {
+    color: rgba(0,0,0,0.5);
+}
+#searching:focus {
+    background: rgba(255,255,255,0.5);
+    border-color: white;
+}
+
+/* Баланс в шапке */
+#header-balance {
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    white-space: nowrap;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+#header-balance:hover { color: #800020; }
+
+/* Pi-коин */
+#coin-btn {
+    width: 36px;
+    height: 36px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 20px;
+    transition: transform 0.2s;
+}
+#coin-btn:hover { transform: scale(1.15); }
+
+/* Tooltip */
+.header-btn[title]:hover::after {
+    content: attr(title);
+    position: absolute;
+    bottom: -32px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0,0,0,0.8);
+    color: white;
+    font-size: 11px;
+    padding: 3px 8px;
+    border-radius: 6px;
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 100;
+}
+
+/* ===== ПОДВАЛ ===== */
+#footer {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+    padding: 60px 0 40px;
+    margin-top: 80px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    flex-wrap: wrap;
+    gap: 20px;
+}
+#footer a {
+    color: rgb(84, 201, 255);
+    text-decoration: none;
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    transition: color 0.15s;
+}
+#footer a:hover {
+    text-decoration: underline;
+    color: gold;
+}
+#footer_first, #footer_second, #footer_third, #footer_logo {
+    margin: 0 30px;
+}
+#footer h4 {
+    color: rgba(255,255,255,0.5);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+}
+#footer_logo {
+    display: flex;
+    align-items: center;
+}
+#footer_logo .logo-text {
+    font-size: 28px;
+    font-weight: 900;
+    color: gold;
+    letter-spacing: -1px;
+    user-select: none;
+}
+#footer_logo .logo-text span { color: #fff; }
+
+/* ===== PAGE CSS ===== */
+
+/* ===== ВЕРХНЯЯ ПАНЕЛЬ ===== */
+#shop-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 92%;
+    max-width: 1350px;
+    margin: 0 auto 30px;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+#shop-balance {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: rgba(255,255,255,0.07);
+    border-radius: 18px;
+    padding: 14px 22px;
+    font-size: 32px;
+}
+.bal-label { color: rgba(255,255,255,0.5); font-size: 12px; }
+.bal-val { color: goldenrod; font-size: 22px; font-weight: bold; }
+#promo-form {
+    display: flex;
+    gap: 10px;
+}
+#promo-input {
+    height: 46px;
+    width: 220px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 14px;
+    color: white;
+    font-size: 15px;
+    padding: 0 16px;
+    outline: none;
+    transition: border-color 0.15s;
+}
+#promo-input::placeholder { color: rgba(255,255,255,0.35); }
+#promo-input:focus { border-color: gold; }
+#promo-form button {
+    height: 46px;
+    padding: 0 22px;
+    background: goldenrod;
+    border: none;
+    border-radius: 14px;
+    color: white;
+    font-weight: bold;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+#promo-form button:hover { background: gold; }
+
+/* ===== КАТЕГОРИИ ===== */
+#categories {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 36px;
+    flex-wrap: wrap;
+}
+.cat-btn {
+    padding: 10px 22px;
+    border-radius: 30px;
+    border: 1px solid rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.05);
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+.cat-btn:hover { border-color: gold; color: gold; }
+.cat-btn.active { background: goldenrod; border-color: goldenrod; color: #000; font-weight: bold; }
+
+/* ===== FEATURED ===== */
+#shop-featured {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 92%;
+    max-width: 1350px;
+    margin: 0 auto 60px;
+    background: linear-gradient(135deg, #800020 0%, #3a0010 50%, #1a0050 100%);
+    border-radius: 28px;
+    padding: 40px 50px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 4px 40px rgba(128,0,32,0.4);
+}
+#shop-featured::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+}
+.hot-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.15);
+    border-radius: 20px;
+    padding: 5px 16px;
+    font-size: 13px;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 16px;
+    backdrop-filter: blur(4px);
+}
+#featured-content h2 {
+    font-size: 30px;
+    color: white;
+    margin-bottom: 12px;
+    max-width: 480px;
+}
+#featured-content p {
+    color: rgba(255,255,255,0.75);
+    font-size: 15px;
+    max-width: 420px;
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+#featured-price {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+.old-price { color: rgba(255,255,255,0.45); font-size: 18px; text-decoration: line-through; }
+.new-price { color: gold; font-size: 34px; font-weight: bold; }
+.discount-badge {
+    background: #ef4444;
+    color: white;
+    border-radius: 8px;
+    padding: 4px 10px;
+    font-size: 14px;
+    font-weight: bold;
+}
+.buy-btn-big {
+    padding: 14px 36px;
+    background: goldenrod;
+    border: none;
+    border-radius: 20px;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.1s;
+}
+.buy-btn-big:hover { background: gold; transform: scale(1.03); }
+#featured-visual {
+    font-size: 120px;
+    flex-shrink: 0;
+    opacity: 0.9;
+    filter: drop-shadow(0 0 30px rgba(218,165,32,0.5));
+}
+
+/* ===== СЕКЦИИ ===== */
+.shop-section {
+    width: 92%;
+    max-width: 1350px;
+    margin: 0 auto 60px;
+}
+.section-title {
+    font-size: 24px;
+    color: white;
+    margin-bottom: 24px;
+    text-shadow: 0 0 8px rgba(218,165,32,0.4);
+}
+
+/* ===== СЕТКА ТОВАРОВ ===== */
+.items-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+}
+.shop-item {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 20px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: box-shadow 0.2s, transform 0.15s;
+    position: relative;
+}
+.shop-item:hover {
+    box-shadow: 0 0 20px rgba(218,165,32,0.25);
+    transform: translateY(-4px);
+}
+.shop-item.popular { border-color: rgba(218,165,32,0.4); }
+.popular-label {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: goldenrod;
+    color: #000;
+    font-size: 11px;
+    font-weight: bold;
+    padding: 3px 10px;
+    border-radius: 10px;
+    z-index: 1;
+}
+.item-icon {
+    height: 120px;
+    font-size: 54px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.avatar-preview { font-size: 48px; }
+.item-body { padding: 16px; }
+.item-body h4 { color: white; font-size: 16px; margin-bottom: 6px; }
+.item-body p { color: rgba(200,200,200,0.75); font-size: 13px; margin-bottom: 12px; line-height: 1.5; }
+.item-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.item-price { color: goldenrod; font-size: 18px; font-weight: bold; }
+.buy-btn {
+    padding: 8px 18px;
+    background: rgba(218,165,32,0.2);
+    border: 1px solid rgba(218,165,32,0.4);
+    border-radius: 12px;
+    color: goldenrod;
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+.buy-btn:hover { background: goldenrod; color: #000; }
+.buy-btn.coin-btn { color: #fbbf24; border-color: rgba(251,191,36,0.4); background: rgba(251,191,36,0.1); }
+.buy-btn.coin-btn:hover { background: #fbbf24; color: #000; }
+.buy-btn.gold-btn { background: goldenrod; border-color: goldenrod; color: #000; }
+.buy-btn.gold-btn:hover { background: gold; }
+.vip-item { border: 1px solid rgba(218,165,32,0.3); background: rgba(218,165,32,0.05); }
+
+/* ===== КОРЗИНА ===== */
+#cart-panel {
+    position: fixed;
+    bottom: 0;
+    right: 30px;
+    width: 340px;
+    background: rgb(20,20,20);
+    border-radius: 16px 16px 0 0;
+    box-shadow: 0 -4px 30px rgba(0,0,0,0.5);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-bottom: none;
+    z-index: 500;
+}
+#cart-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 18px;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+#cart-count-badge {
+    background: goldenrod;
+    color: #000;
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+#cart-toggle {
+    margin-left: auto;
+    background: none;
+    border: none;
+    color: rgba(255,255,255,0.5);
+    cursor: pointer;
+    font-size: 14px;
+}
+#cart-body { display: none; padding: 14px 18px; }
+#cart-items { margin-bottom: 14px; max-height: 200px; overflow-y: auto; }
+.cart-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.ci-name { flex: 1; color: rgba(255,255,255,0.85); font-size: 14px; }
+.ci-price { color: goldenrod; font-size: 14px; font-weight: bold; white-space: nowrap; }
+.ci-remove { background: none; border: none; color: rgba(255,100,100,0.7); cursor: pointer; font-size: 14px; }
+.ci-remove:hover { color: #ff6464; }
+#cart-total-row {
+    display: flex;
+    justify-content: space-between;
+    color: white;
+    font-size: 16px;
+    margin-bottom: 12px;
+}
+#cart-total { color: gold; }
+#checkout-btn {
+    width: 100%;
+    height: 44px;
+    background: goldenrod;
+    border: none;
+    border-radius: 12px;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+#checkout-btn:hover { background: gold; }
+
+/* ===== ТОСТ ===== */
+#toast {
+    position: fixed;
+    top: 80px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-10px);
+    background: rgb(25,25,25);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 14px;
+    font-size: 15px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s, transform 0.2s;
+    z-index: 3000;
+    white-space: nowrap;
+}
+#toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+</style>
+</head>
+<body>
+
+<!-- ШАПКА  -->
+<nav id="header">
+    <a href="Main_page_PDEP.html"><div id="logo-text"><img id="logos" src="images/redDEPlogo.svg" alt=""></div></a>
+    <a href="Account_page_PDEP.html"><button class="header-btn" title="Профиль"><svg viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg></button></a>
+    <a href="Shop_page_PDEP.html"><button class="header-btn active" title="Магазин"><svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.6L5.2 14c-.2.3-.2.6-.2.9C5 16.1 5.9 17 7 17h14v-2H7.4c-.1 0-.2-.1-.2-.2v-.1l1-1.8H19c.8 0 1.4-.4 1.8-1L23.2 6c.3-.4.1-1-.4-1H5.2L4.3 2H1zm16 16c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg></button></a>
+    <a href="News_page_PDEP.html"><button class="header-btn" title="Новости"><svg viewBox="0 0 24 24"><path d="M20 3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H4V5h16v14zM6 7h8v2H6zm0 4h8v2H6zm0 4h5v2H6z"/></svg></button></a>
+    <a href="Subscription_page_PDEP.html"><button class="header-btn" title="Подписка"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg></button></a>
+    <input id="searching" type="text" placeholder="Поиск" maxlength="60">
+    <a href="Account_page_PDEP.html"><span id="header-balance">777 777 777</span></a>
+    <button id="coin-btn" title="Pi-Коин">🪙</button>
+    <a href="FAQ.html"><button class="header-btn" title="Помощь"><svg viewBox="0 0 24 24"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm1 17h-2v-2h2v2zm2.1-7.8l-.9.9C13.5 12.8 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.2-2.8l1.2-1.2c.4-.35.6-.85.6-1.4 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.2 1.8-4 4-4s4 1.8 4 4c0 .88-.35 1.68-.9 2.2z"/></svg></button></a>
+    <a href="Settings_page_PDEP.html"><button class="header-btn" title="Настройки"><svg viewBox="0 0 24 24"><path d="M19.4 13c0-.3.1-.6.1-1s0-.7-.1-1l2.1-1.7c.2-.2.2-.4.1-.6l-2-3.5c-.1-.2-.4-.3-.6-.2l-2.5 1c-.5-.4-1.1-.7-1.7-1l-.4-2.6c0-.3-.3-.4-.5-.4h-4c-.3 0-.5.2-.5.4l-.4 2.6c-.6.3-1.2.6-1.7 1l-2.5-1c-.2-.1-.5 0-.6.2l-2 3.5c-.1.2-.1.5.1.6L4.6 11c0 .3-.1.6-.1 1s0 .7.1 1l-2.1 1.7c-.2.2-.2.4-.1.6l2 3.5c.1.2.4.3.6.2l2.5-1c.5.4 1.1.7 1.7 1l.4 2.6c.1.2.3.4.5.4h4c.3 0 .5-.2.5-.4l.4-2.6c.6-.3 1.2-.6 1.7-1l2.5 1c.2.1.5 0 .6-.2l2-3.5c.1-.2.1-.5-.1-.6L19.4 13zM12 15.5c-1.9 0-3.5-1.6-3.5-3.5s1.6-3.5 3.5-3.5 3.5 1.6 3.5 3.5-1.6 3.5-3.5 3.5z"/></svg></button></a>
+</nav>
+
+<div class="page-content">
+
+    <!-- ВЕРХНЯЯ ПАНЕЛЬ -->
+    <div id="shop-top">
+        <div id="shop-balance">
+            <span>🪙</span>
+            <div>
+                <p class="bal-label">Pi-коины</p>
+                <p class="bal-val">12 500</p>
+            </div>
+        </div>
+        <div id="promo-form">
+            <input type="text" id="promo-input" placeholder="Введите промокод..." maxlength="20">
+            <button onclick="applyPromo()">Применить</button>
+        </div>
+    </div>
+
+    <!-- КАТЕГОРИИ -->
+    <div id="categories">
+        <button class="cat-btn active" data-cat="all">🛒 Всё</button>
+        <button class="cat-btn" data-cat="chips">🎰 Фишки</button>
+        <button class="cat-btn" data-cat="bonus">⚡ Бонусы</button>
+        <button class="cat-btn" data-cat="cosmetic">🎨 Косметика</button>
+        <button class="cat-btn" data-cat="vip">👑 VIP</button>
+    </div>
+
+    <!-- FEATURED — БОЛЬШОЙ БАННЕР -->
+    <div id="shop-featured">
+        <div id="featured-content">
+            <div class="hot-badge">🔥 ХИТ ПРОДАЖ</div>
+            <h2>Мегапак фишек — 10 000 000 🎰</h2>
+            <p>Лучшее соотношение цены и фишек на платформе. Бонус +25% к сумме автоматически.</p>
+            <div id="featured-price">
+                <span class="old-price">1 490 ₽</span>
+                <span class="new-price">990 ₽</span>
+                <span class="discount-badge">−34%</span>
+            </div>
+            <button class="buy-btn-big" onclick="addToCart('Мегапак фишек 10M', 990)">В корзину</button>
+        </div>
+        <div id="featured-visual">🎰</div>
+    </div>
+
+    <!-- СЕКЦИЯ: ФИШКИ -->
+    <section class="shop-section" id="sec-chips" data-cat="chips">
+        <h2 class="section-title">🎰 Фишки</h2>
+        <div class="items-grid">
+            <div class="shop-item" data-cat="chips"><div class="item-icon" style="background:linear-gradient(135deg,#1a472a,#0d2614)">🎰</div><div class="item-body"><h4>Стартовый пак</h4><p>100 000 фишек для игры</p><div class="item-footer"><span class="item-price">99 ₽</span><button class="buy-btn" onclick="addToCart('Стартовый пак', 99)">Купить</button></div></div></div>
+            <div class="shop-item" data-cat="chips"><div class="item-icon" style="background:linear-gradient(135deg,#1a1a6e,#0a0a3a)">🎰</div><div class="item-body"><h4>Стандартный пак</h4><p>500 000 фишек</p><div class="item-footer"><span class="item-price">399 ₽</span><button class="buy-btn" onclick="addToCart('Стандартный пак', 399)">Купить</button></div></div></div>
+            <div class="shop-item popular" data-cat="chips"><div class="popular-label">Популярное</div><div class="item-icon" style="background:linear-gradient(135deg,#b45309,#78350f)">🎰</div><div class="item-body"><h4>Золотой пак</h4><p>2 000 000 фишек +10% бонус</p><div class="item-footer"><span class="item-price">990 ₽</span><button class="buy-btn" onclick="addToCart('Золотой пак', 990)">Купить</button></div></div></div>
+            <div class="shop-item" data-cat="chips"><div class="item-icon" style="background:linear-gradient(135deg,#6b21a8,#3b0764)">🎰</div><div class="item-body"><h4>Платиновый пак</h4><p>5 000 000 фишек +20% бонус</p><div class="item-footer"><span class="item-price">1 990 ₽</span><button class="buy-btn" onclick="addToCart('Платиновый пак', 1990)">Купить</button></div></div></div>
+        </div>
+    </section>
+
+    <!-- СЕКЦИЯ: БОНУСЫ -->
+    <section class="shop-section" id="sec-bonus" data-cat="bonus">
+        <h2 class="section-title">⚡ Бонусы и буст</h2>
+        <div class="items-grid">
+            <div class="shop-item" data-cat="bonus"><div class="item-icon" style="background:linear-gradient(135deg,#be123c,#7f1d1d)">⚡</div><div class="item-body"><h4>×2 выигрыш — 1 час</h4><p>Все выигрыши удваиваются в течение часа</p><div class="item-footer"><span class="item-price">250 ₽</span><button class="buy-btn" onclick="addToCart('Буст ×2 (1ч)', 250)">Купить</button></div></div></div>
+            <div class="shop-item" data-cat="bonus"><div class="item-icon" style="background:linear-gradient(135deg,#065f46,#022c22)">🍀</div><div class="item-body"><h4>Удача +15%</h4><p>Повышает шанс победы на 15% — 30 игр</p><div class="item-footer"><span class="item-price">199 ₽</span><button class="buy-btn" onclick="addToCart('Удача +15%', 199)">Купить</button></div></div></div>
+            <div class="shop-item" data-cat="bonus"><div class="item-icon" style="background:linear-gradient(135deg,#1e3a5f,#0a1a3a)">🔄</div><div class="item-body"><h4>50 Фриспинов</h4><p>Бесплатные вращения в любом слоте</p><div class="item-footer"><span class="item-price">149 ₽</span><button class="buy-btn" onclick="addToCart('50 Фриспинов', 149)">Купить</button></div></div></div>
+            <div class="shop-item popular" data-cat="bonus"><div class="popular-label">Выгодно</div><div class="item-icon" style="background:linear-gradient(135deg,#78350f,#3a1a00)">🎁</div><div class="item-body"><h4>Комбо-бустер</h4><p>×2 выигрыш + Удача +15% + 20 фриспинов</p><div class="item-footer"><span class="item-price">499 ₽</span><button class="buy-btn" onclick="addToCart('Комбо-бустер', 499)">Купить</button></div></div></div>
+        </div>
+    </section>
+
+    <!-- СЕКЦИЯ: КОСМЕТИКА -->
+    <section class="shop-section" id="sec-cosmetic" data-cat="cosmetic">
+        <h2 class="section-title">🎨 Косметика профиля</h2>
+        <div class="items-grid">
+            <div class="shop-item" data-cat="cosmetic"><div class="item-icon avatar-preview" style="background:linear-gradient(135deg,#ffd700,#b8860b)">👑</div><div class="item-body"><h4>Рамка «Золото»</h4><p>Золотая рамка для аватара</p><div class="item-footer"><span class="item-price">🪙 500</span><button class="buy-btn coin-btn" onclick="addToCart('Рамка Золото', 0, 500)">Купить</button></div></div></div>
+            <div class="shop-item" data-cat="cosmetic"><div class="item-icon avatar-preview" style="background:linear-gradient(135deg,#9f1239,#4c0519)">🔥</div><div class="item-body"><h4>Аватар «Пламя»</h4><p>Анимированный аватар с огнём</p><div class="item-footer"><span class="item-price">🪙 1200</span><button class="buy-btn coin-btn" onclick="addToCart('Аватар Пламя', 0, 1200)">Купить</button></div></div></div>
+            <div class="shop-item" data-cat="cosmetic"><div class="item-icon avatar-preview" style="background:linear-gradient(135deg,#1e1b4b,#312e81)">💎</div><div class="item-body"><h4>Ник «Diamond»</h4><p>Переливающийся цвет никнейма</p><div class="item-footer"><span class="item-price">🪙 800</span><button class="buy-btn coin-btn" onclick="addToCart('Ник Diamond', 0, 800)">Купить</button></div></div></div>
+            <div class="shop-item" data-cat="cosmetic"><div class="item-icon avatar-preview" style="background:linear-gradient(135deg,#064e3b,#022c22)">🃏</div><div class="item-body"><h4>Рубашка карт «Изумруд»</h4><p>Кастомный дизайн карт в играх</p><div class="item-footer"><span class="item-price">🪙 650</span><button class="buy-btn coin-btn" onclick="addToCart('Рубашка Изумруд', 0, 650)">Купить</button></div></div></div>
+        </div>
+    </section>
+
+    <!-- СЕКЦИЯ: VIP -->
+    <section class="shop-section" id="sec-vip" data-cat="vip">
+        <h2 class="section-title">👑 VIP-привилегии</h2>
+        <div class="items-grid">
+            <div class="shop-item vip-item" data-cat="vip"><div class="item-icon" style="background:linear-gradient(135deg,#b45309,#78350f)">👑</div><div class="item-body"><h4>VIP-статус — 7 дней</h4><p>+5% к выигрышу, приоритетная поддержка, закрытые столы</p><div class="item-footer"><span class="item-price">590 ₽</span><button class="buy-btn gold-btn" onclick="addToCart('VIP 7 дней', 590)">Купить</button></div></div></div>
+            <div class="shop-item vip-item popular" data-cat="vip"><div class="popular-label">Лучший выбор</div><div class="item-icon" style="background:linear-gradient(135deg,#92400e,#451a03)">👑</div><div class="item-body"><h4>VIP-статус — 30 дней</h4><p>+10% к выигрышу, личный менеджер, эксклюзивные турниры</p><div class="item-footer"><span class="item-price">1 490 ₽</span><button class="buy-btn gold-btn" onclick="addToCart('VIP 30 дней', 1490)">Купить</button></div></div></div>
+        </div>
+    </section>
+
+</div><!-- /page-content -->
+
+<!-- КОРЗИНА -->
+<div id="cart-panel">
+    <div id="cart-header" onclick="toggleCart()">
+        <span>🛒 Корзина</span>
+        <span id="cart-count-badge">0</span>
+        <button id="cart-toggle">▲</button>
+    </div>
+    <div id="cart-body">
+        <div id="cart-items"></div>
+        <div id="cart-total-row">
+            <span>Итого:</span>
+            <strong id="cart-total">0 ₽</strong>
+        </div>
+        <button id="checkout-btn" onclick="checkout()">Оплатить</button>
+    </div>
+</div>
+
+<!-- УВЕДОМЛЕНИЕ -->
+<div id="toast"></div>
+
+<!-- ПОДВАЛ -->
+<footer id="footer">
+    <div id="footer_first">
+        <h4>О проекте</h4>
+        <a href="FAQ.html">О нас</a>
+        <a href="FAQ.html">FAQ</a>
+        <a href="#">Партнеры</a>
+    </div>
+    <div id="footer_second">
+        <h4>Документы</h4>
+        <a href="#">Пользовательское соглашение</a>
+        <a href="#">Правила и условия</a>
+        <a href="#">Политика возврата</a>
+    </div>
+    <div id="footer_third">
+        <h4>Контакты</h4>
+        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=danielveselov28@gmail.com&su=Обратная%20связь&body=Здравствуйте!">Обратная связь</a>
+        <a href="https://t.me/pidepcasino" target="_blank">Telegram-канал</a>
+    </div>
+    <div id="footer_logo">
+        <a href="Main_page_PDEP.html"><div class="logo-text"><img id="logos" src="images/goldDEPlogo.svg" alt=""></div></a>
+    </div>
+</footer>
+
+<script>
+let cart = [];
+let cartOpen = false;
+
+function addToCart(name, price, coins) {
+    const existing = cart.find(i => i.name === name);
+    if (existing) { existing.qty++; }
+    else { cart.push({ name, price: price || 0, coins: coins || 0, qty: 1 }); }
+    renderCart();
+    showToast('✅ ' + name + ' добавлен в корзину');
+}
+
+function removeFromCart(idx) {
+    cart.splice(idx, 1);
+    renderCart();
+}
+
+function renderCart() {
+    const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
+    const count = cart.reduce((s, i) => s + i.qty, 0);
+    document.getElementById('cart-count-badge').textContent = count;
+    document.getElementById('cart-total').textContent = total + ' ₽';
+    const itemsEl = document.getElementById('cart-items');
+    itemsEl.innerHTML = cart.length === 0
+        ? '<p style="color:rgba(255,255,255,0.4);text-align:center;padding:20px">Корзина пуста</p>'
+        : cart.map((item, i) => `
+            <div class="cart-item">
+                <span class="ci-name">${item.name}${item.qty > 1 ? ' ×' + item.qty : ''}</span>
+                <span class="ci-price">${item.price ? item.price * item.qty + ' ₽' : '🪙 ' + item.coins * item.qty}</span>
+                <button class="ci-remove" onclick="removeFromCart(${i})">✕</button>
+            </div>`).join('');
+}
+
+function toggleCart() {
+    cartOpen = !cartOpen;
+    document.getElementById('cart-body').style.display = cartOpen ? 'block' : 'none';
+    document.getElementById('cart-toggle').textContent = cartOpen ? '▼' : '▲';
+}
+
+function checkout() {
+    if (cart.length === 0) { showToast('⚠️ Корзина пуста'); return; }
+    cart = [];
+    renderCart();
+    showToast('💳 Оплата прошла успешно! Товары добавлены в аккаунт.');
+}
+
+function applyPromo() {
+    const code = document.getElementById('promo-input').value.trim().toUpperCase();
+    const codes = { 'PIDEP100': '+100 000 фишек', 'LUCKY': '+50 фриспинов', 'VIP7': '7 дней VIP бесплатно' };
+    if (codes[code]) { showToast('🎁 Промокод активирован: ' + codes[code]); document.getElementById('promo-input').value = ''; }
+    else if (code) { showToast('❌ Неверный промокод'); }
+}
+
+// Фильтры
+document.querySelectorAll('.cat-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const cat = btn.dataset.cat;
+        document.querySelectorAll('.shop-section').forEach(sec => {
+            sec.style.display = (cat === 'all' || sec.dataset.cat === cat) ? '' : 'none';
+        });
+    });
+});
+
+function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+renderCart();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Веселов Даниэль">
+    <meta name="description" content="Новости из мира казино — PiDEP">
+    <title>PiDEP — Новости</title>
+<style>
+/* ===== ОБЩИЙ СБРОС ===== */
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    height: 100%;
+    background: linear-gradient(to bottom, #800020 67%, #000000);
+    font-family: Arial, Helvetica, sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+a {
+    text-decoration: none;
+}
+
+/* ===== ШАПКА ===== */
+#header {
+    height: 55px;
+    width: 90%;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.7);
+    background: goldenrod;
+    color: black;
+    margin: 10px 5%;
+    border-radius: 30px;
+    position: fixed;
+    top: 10px;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    z-index: 1000;
+    gap: 6px;
+}
+
+#logo-text {
+    font-size: 22px;
+    font-weight: 900;
+    color: #800020;
+    letter-spacing: -1px;
+    cursor: pointer;
+    white-space: nowrap;
+    user-select: none;
+    flex-shrink: 0;
+    margin-right: 4px;
+}
+#logo-text span { color: #000; }
+
+.header-btn {
+    width: 36px;
+    height: 36px;
+    background: none;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: background 0.15s;
+    padding: 0;
+    position: relative;
+}
+.header-btn:hover { background: rgba(255,255,255,0.35); }
+.header-btn svg {
+    width: 22px;
+    height: 22px;
+    fill: white;
+    pointer-events: none;
+}
+.header-btn.active { background: rgba(255,255,255,0.25); }
+
+.header-btn[title]:hover::after {
+    content: attr(title);
+    position: absolute;
+    bottom: -32px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0,0,0,0.8);
+    color: white;
+    font-size: 11px;
+    padding: 3px 8px;
+    border-radius: 6px;
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 100;
+}
+
+#searching {
+    flex: 1;
+    max-width: 300px;
+    height: 30px;
+    background: rgba(255,255,255,0.3);
+    border-radius: 20px;
+    border: 2px solid rgba(255,255,255,0.6);
+    padding: 0 14px;
+    font-size: 14px;
+    color: #000;
+    outline: none;
+    margin: 0 auto;
+}
+#searching::placeholder { color: rgba(0,0,0,0.5); }
+#searching:focus {
+    background: rgba(255,255,255,0.5);
+    border-color: white;
+}
+
+#header-balance {
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    white-space: nowrap;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+#header-balance:hover { color: #800020; }
+
+#coin-btn {
+    width: 36px;
+    height: 36px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 20px;
+    transition: transform 0.2s;
+}
+#coin-btn:hover { transform: scale(1.15); }
+
+/* ===== ПОДВАЛ ===== */
+#footer {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+    padding: 60px 0 40px;
+    margin-top: 80px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    flex-wrap: wrap;
+    gap: 20px;
+}
+#footer a {
+    color: rgb(84, 201, 255);
+    text-decoration: none;
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    transition: color 0.15s;
+}
+#footer a:hover {
+    text-decoration: underline;
+    color: gold;
+}
+#footer_first, #footer_second, #footer_third, #footer_logo {
+    margin: 0 30px;
+}
+#footer h4 {
+    color: rgba(255,255,255,0.5);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+}
+#footer_logo .logo-text {
+    font-size: 28px;
+    font-weight: 900;
+    color: gold;
+    letter-spacing: -1px;
+    user-select: none;
+}
+#footer_logo .logo-text span { color: #fff; }
+
+/* ===== УТИЛИТЫ ===== */
+.page-content {
+    padding-top: 80px;
+}
+
+/* ===== НОВОСТИ ===== */
+#news-header {
+    text-align: center;
+    padding: 20px 0 40px;
+    width: 92%;
+    max-width: 1350px;
+    margin: 0 auto;
+}
+#news-header h1 {
+    font-size: 42px;
+    color: white;
+    text-shadow: 0 0 20px rgba(218,165,32,0.5);
+    margin-bottom: 12px;
+}
+#news-subtitle {
+    color: rgba(255,255,255,0.6);
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+#partner-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 30px;
+    padding: 8px 24px;
+    font-size: 18px;
+    font-weight: bold;
+}
+.pidep-name { color: goldenrod; }
+.pidep-name b { color: white; }
+.times { color: rgba(255,255,255,0.4); }
+.iz-name { color: white; }
+
+/* ===== ФИЛЬТРЫ ===== */
+#filters {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+}
+.filter-btn {
+    padding: 10px 22px;
+    border-radius: 30px;
+    border: 1px solid rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.05);
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+.filter-btn:hover { border-color: gold; color: gold; }
+.filter-btn.active {
+    background: goldenrod;
+    border-color: goldenrod;
+    color: #000;
+    font-weight: bold;
+}
+
+/* ===== HERO НОВОСТЬ ===== */
+#hero-news {
+    display: flex;
+    gap: 36px;
+    width: 92%;
+    max-width: 1350px;
+    margin: 0 auto 50px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 28px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.08);
+    transition: box-shadow 0.2s;
+}
+#hero-news:hover { box-shadow: 0 0 30px rgba(218,165,32,0.25); }
+#hero-img {
+    width: 380px;
+    flex-shrink: 0;
+    background: linear-gradient(135deg, #800020, #3a0010);
+    font-size: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#hero-content {
+    padding: 36px 36px 36px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 14px;
+}
+#hero-content h2 {
+    font-size: 26px;
+    color: white;
+    line-height: 1.35;
+}
+#hero-content p {
+    color: rgba(220,220,220,0.85);
+    font-size: 15px;
+    line-height: 1.7;
+}
+.read-btn {
+    align-self: flex-start;
+    padding: 12px 28px;
+    background: goldenrod;
+    border: none;
+    border-radius: 20px;
+    color: white;
+    font-weight: bold;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.1s;
+    margin-top: 8px;
+}
+.read-btn:hover { background: gold; transform: scale(1.03); }
+
+/* ===== ТЕГИ ===== */
+.news-tag {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+.tag-casino  { background: rgba(128,0,32,0.4);  color: #ff8080; border: 1px solid rgba(255,128,128,0.3); }
+.tag-sport   { background: rgba(13,74,20,0.4);  color: #4ade80; border: 1px solid rgba(74,222,128,0.3); }
+.tag-crypto  { background: rgba(13,44,128,0.4); color: #60a5fa; border: 1px solid rgba(96,165,250,0.3); }
+.tag-pidep   { background: rgba(218,165,32,0.2);color: goldenrod;border: 1px solid rgba(218,165,32,0.4); }
+
+/* ===== СЕТКА ===== */
+#news-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    width: 92%;
+    max-width: 1350px;
+    margin: 0 auto 50px;
+}
+.news-card {
+    background: rgba(255,255,255,0.05);
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.07);
+    cursor: pointer;
+    transition: box-shadow 0.2s, transform 0.15s;
+}
+.news-card:hover {
+    box-shadow: 0 0 20px rgba(218,165,32,0.2);
+    transform: translateY(-4px);
+}
+.card-img {
+    height: 130px;
+    font-size: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.card-body {
+    padding: 18px 20px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.card-body h3 {
+    font-size: 16px;
+    color: white;
+    line-height: 1.4;
+}
+.card-body p {
+    font-size: 13px;
+    color: rgba(210,210,210,0.8);
+    line-height: 1.6;
+}
+.news-meta {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 4px;
+}
+.news-date { font-size: 12px; color: rgba(255,255,255,0.4); }
+.news-src   { font-size: 12px; color: rgba(255,255,255,0.4); }
+
+#pagination {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 60px;
+    color: rgba(255,255,255,0.5);
+    font-size: 18px;
+}
+.page-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.05);
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+.page-btn:hover { border-color: gold; color: gold; }
+.page-btn.active { background: goldenrod; border-color: goldenrod; color: #000; font-weight: bold; }
+
+/* ===== МОДАЛКА ===== */
+#modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.75);
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(4px);
+}
+#modal {
+    background: rgb(25,25,25);
+    border-radius: 24px;
+    padding: 40px;
+    max-width: 660px;
+    width: 90%;
+    position: relative;
+    border: 1px solid rgba(255,255,255,0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+#modal-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 36px;
+    height: 36px;
+    background: rgba(255,255,255,0.1);
+    border: none;
+    border-radius: 50%;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+#modal-close:hover { background: rgba(255,255,255,0.2); }
+#modal h2 { color: white; font-size: 22px; line-height: 1.35; }
+#modal p  { color: rgba(220,220,220,0.85); font-size: 15px; line-height: 1.75; }
+#modal-meta { color: rgba(255,255,255,0.4); font-size: 13px; }
+
+#logos{
+    height: 100px;
+    width: 80px;
+    margin-top: 9px;
+}
+
+</style>
+</head>
+<body>
+
+<!-- ========== ШАПКА (HTML) ========== -->
+<nav id="header">
+    <a href="Main_page_PDEP.html"><div id="logo-text"><img id="logos" src="images/redDEPlogo.svg" alt=""></div></a>
+    
+    <a href="Account_page_PDEP.html">
+        <button class="header-btn" title="Профиль">
+            <svg viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
+        </button>
+    </a>
+    
+    <a href="Shop_page_PDEP.html">
+        <button class="header-btn" title="Магазин">
+            <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.6L5.2 14c-.2.3-.2.6-.2.9C5 16.1 5.9 17 7 17h14v-2H7.4c-.1 0-.2-.1-.2-.2v-.1l1-1.8H19c.8 0 1.4-.4 1.8-1L23.2 6c.3-.4.1-1-.4-1H5.2L4.3 2H1zm16 16c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+        </button>
+    </a>
+    
+    <a href="News_page_PDEP.html">
+        <button class="header-btn active" title="Новости">
+            <svg viewBox="0 0 24 24"><path d="M20 3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H4V5h16v14zM6 7h8v2H6zm0 4h8v2H6zm0 4h5v2H6z"/></svg>
+        </button>
+    </a>
+    
+    <a href="Subscription_page_PDEP.html">
+        <button class="header-btn" title="Подписка">
+            <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
+        </button>
+    </a>
+    
+    <input id="searching" type="text" placeholder="Поиск" maxlength="60">
+    
+    <a href="Account_page_PDEP.html"><span id="header-balance">777'777'777</span></a>
+    
+    <button id="coin-btn" title="Pi-Коин">🪙</button>
+    
+    <a href="FAQ.html">
+        <button class="header-btn" title="Помощь">
+            <svg viewBox="0 0 24 24"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm1 17h-2v-2h2v2zm2.1-7.8l-.9.9C13.5 12.8 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.2-2.8l1.2-1.2c.4-.35.6-.85.6-1.4 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.2 1.8-4 4-4s4 1.8 4 4c0 .88-.35 1.68-.9 2.2z"/></svg>
+        </button>
+    </a>
+    
+    <a href="Settings_page_PDEP.html">
+        <button class="header-btn" title="Настройки">
+            <svg viewBox="0 0 24 24"><path d="M19.4 13c0-.3.1-.6.1-1s0-.7-.1-1l2.1-1.7c.2-.2.2-.4.1-.6l-2-3.5c-.1-.2-.4-.3-.6-.2l-2.5 1c-.5-.4-1.1-.7-1.7-1l-.4-2.6c0-.3-.3-.4-.5-.4h-4c-.3 0-.5.2-.5.4l-.4 2.6c-.6.3-1.2.6-1.7 1l-2.5-1c-.2-.1-.5 0-.6.2l-2 3.5c-.1.2-.1.5.1.6L4.6 11c0 .3-.1.6-.1 1s0 .7.1 1l-2.1 1.7c-.2.2-.2.4-.1.6l2 3.5c.1.2.4.3.6.2l2.5-1c.5.4 1.1.7 1.7 1l.4 2.6c.1.2.3.4.5.4h4c.3 0 .5-.2.5-.4l.4-2.6c.6-.3 1.2-.6 1.7-1l2.5 1c.2.1.5 0 .6-.2l2-3.5c.1-.2.1-.5-.1-.6L19.4 13zM12 15.5c-1.9 0-3.5-1.6-3.5-3.5s1.6-3.5 3.5-3.5 3.5 1.6 3.5 3.5-1.6 3.5-3.5 3.5z"/></svg>
+        </button>
+    </a>
+</nav>
+
+<div class="page-content">
+
+    <!-- ЗАГОЛОВОК НОВОСТЕЙ -->
+    <div id="news-header">
+        <h1>Новости мира казино</h1>
+        <p id="news-subtitle">Актуальные события, аналитика и обзоры — партнёрство PiDEP × Известия</p>
+        <div id="partner-badge">
+            <span class="pidep-name">Pi<b>DEP</b></span>
+            <span class="times">×</span>
+            <span class="iz-name">Известия</span>
+        </div>
+    </div>
+
+    <!-- ФИЛЬТРЫ -->
+    <div id="filters">
+        <button class="filter-btn active" data-cat="all">Все</button>
+        <button class="filter-btn" data-cat="casino">🎰 Казино</button>
+        <button class="filter-btn" data-cat="sport">🏆 Спорт</button>
+        <button class="filter-btn" data-cat="crypto">₿ Крипто</button>
+        <button class="filter-btn" data-cat="pidep">⚡ PiDEP</button>
+    </div>
+
+    <!-- ГЛАВНАЯ НОВОСТЬ -->
+    <div id="hero-news" data-cat="casino">
+        <div id="hero-img">🎰</div>
+        <div id="hero-content">
+            <span class="news-tag tag-casino">Казино</span>
+            <h2>Мировой рынок онлайн-казино достиг $95 млрд в 2026 году</h2>
+            <p>По данным аналитического агентства Grand View Research, объём мирового рынка онлайн-гемблинга превысил 95 миллиардов долларов. Эксперты связывают рост с распространением мобильного интернета, легализацией онлайн-казино в новых юрисдикциях и популярностью криптовалютных ставок.</p>
+            <div class="news-meta">
+                <span class="news-date">📅 2 июня 2026</span>
+                <span class="news-src">Источник: GVR Analytics</span>
+            </div>
+            <button class="read-btn" onclick="openModal(heroData)">Читать полностью</button>
+        </div>
+    </div>
+
+    <!-- СЕТКА НОВОСТЕЙ -->
+    <div id="news-grid">
+        <article class="news-card" data-cat="sport">
+            <div class="card-img" style="background:linear-gradient(135deg,#1a1a6e,#800020)">🏎️</div>
+            <div class="card-body">
+                <span class="news-tag tag-sport">Спорт</span>
+                <h3>Ферстаппен выиграл Гран-при Лас-Вегаса и сократил отрыв</h3>
+                <p>Макс Ферстаппен одержал победу на Гран-при Лас-Вегаса 2025 и догнал Ландо Норриса по очкам чемпионата — разрыв сократился до 24 очков.</p>
+                <div class="news-meta"><span class="news-date">📅 25 ноября 2025</span></div>
+            </div>
+        </article>
+        <article class="news-card" data-cat="crypto">
+            <div class="card-img" style="background:linear-gradient(135deg,#0d4a0d,#1a6e1a)">₿</div>
+            <div class="card-body">
+                <span class="news-tag tag-crypto">Крипто</span>
+                <h3>Bitcoin-казино обработали ставок на $18 млрд за квартал</h3>
+                <p>Согласно отчёту Blockchain Gaming Alliance, объём ставок в Bitcoin-казино вырос на 34% по сравнению с аналогичным периодом прошлого года.</p>
+                <div class="news-meta"><span class="news-date">📅 18 ноября 2025</span></div>
+            </div>
+        </article>
+        <article class="news-card" data-cat="casino">
+            <div class="card-img" style="background:linear-gradient(135deg,#6b21a8,#3b0764)">🎲</div>
+            <div class="card-body">
+                <span class="news-tag tag-casino">Казино</span>
+                <h3>Live-казино с AR: новый формат игры появился в 5 крупных клубах</h3>
+                <p>Evolution Gaming запустила первые столы с дополненной реальностью. Игроки могут видеть 3D-элементы поверх видеотрансляции крупье прямо в браузере.</p>
+                <div class="news-meta"><span class="news-date">📅 10 ноября 2025</span></div>
+            </div>
+        </article>
+        <article class="news-card" data-cat="pidep">
+            <div class="card-img" style="background:linear-gradient(135deg,#800020,#3a0010)">⚡</div>
+            <div class="card-body">
+                <span class="news-tag tag-pidep">PiDEP</span>
+                <h3>PiDEP запускает новый формат турниров с призовым фондом $500 000</h3>
+                <p>С 1 декабря 2025 года на платформе стартует серия еженедельных турниров по покеру и блэкджеку. Суммарный призовой фонд серии — полмиллиона долларов.</p>
+                <div class="news-meta"><span class="news-date">📅 5 ноября 2025</span></div>
+            </div>
+        </article>
+        <article class="news-card" data-cat="casino">
+            <div class="card-img" style="background:linear-gradient(135deg,#b45309,#78350f)">🃏</div>
+            <div class="card-body">
+                <span class="news-tag tag-casino">Казино</span>
+                <h3>Покерный турнир WSOP 2025: рекордные 12 000 участников</h3>
+                <p>Главное событие World Series of Poker 2025 в Лас-Вегасе собрало рекордное количество участников. Призовой пул превысил $120 миллионов.</p>
+                <div class="news-meta"><span class="news-date">📅 1 ноября 2025</span></div>
+            </div>
+        </article>
+        <article class="news-card" data-cat="crypto">
+            <div class="card-img" style="background:linear-gradient(135deg,#0a4a6e,#0a1a3a)">🔗</div>
+            <div class="card-body">
+                <span class="news-tag tag-crypto">Крипто</span>
+                <h3>Ethereum-ставки легализованы в трёх новых странах ЕС</h3>
+                <p>Польша, Чехия и Венгрия приняли законодательство, разрешающее азартные игры с использованием ETH и стейблкоинов под надзором местных регуляторов.</p>
+                <div class="news-meta"><span class="news-date">📅 28 октября 2025</span></div>
+            </div>
+        </article>
+        <article class="news-card" data-cat="pidep">
+            <div class="card-img" style="background:linear-gradient(135deg,#800020,#5a0010)">🪙</div>
+            <div class="card-body">
+                <span class="news-tag tag-pidep">PiDEP</span>
+                <h3>Обновление Pi-коинов: новые способы заработка на платформе</h3>
+                <p>С обновлением 3.2 игроки могут зарабатывать Pi-коины не только за ставки, но и за достижения, просмотр обучающих материалов и участие в опросах.</p>
+                <div class="news-meta"><span class="news-date">📅 20 октября 2025</span></div>
+            </div>
+        </article>
+        <article class="news-card" data-cat="sport">
+            <div class="card-img" style="background:linear-gradient(135deg,#1a472a,#0d2614)">⚽</div>
+            <div class="card-body">
+                <span class="news-tag tag-sport">Спорт</span>
+                <h3>Ставки на киберспорт превысили $7 млрд — новый рекорд</h3>
+                <p>Рынок ставок на киберспортивные дисциплины (CS2, Dota 2, LoL) установил новый рекорд. Аналитики прогнозируют удвоение показателя к 2027 году.</p>
+                <div class="news-meta"><span class="news-date">📅 15 октября 2025</span></div>
+            </div>
+        </article>
+        <article class="news-card" data-cat="casino">
+            <div class="card-img" style="background:linear-gradient(135deg,#4a1a1a,#800020)">🎡</div>
+            <div class="card-body">
+                <span class="news-tag tag-casino">Казино</span>
+                <h3>ИИ-крупье: первый автономный дилер появился в онлайн-казино</h3>
+                <p>Стартап DealerAI представил полностью автономного виртуального крупье на базе нейросети. Дилер взаимодействует с игроками на 12 языках в режиме реального времени.</p>
+                <div class="news-meta"><span class="news-date">📅 8 октября 2025</span></div>
+            </div>
+        </article>
+    </div>
+
+    <!-- ПАГИНАЦИЯ -->
+    <div id="pagination">
+        <button class="page-btn active">1</button>
+        <button class="page-btn">2</button>
+        <button class="page-btn">3</button>
+        <span>...</span>
+        <button class="page-btn">12</button>
+    </div>
+
+    <!-- МОДАЛЬНОЕ ОКНО -->
+    <div id="modal-overlay" onclick="closeModal()">
+        <div id="modal" onclick="event.stopPropagation()">
+            <button id="modal-close" onclick="closeModal()">✕</button>
+            <span id="modal-tag"></span>
+            <h2 id="modal-title"></h2>
+            <p id="modal-body"></p>
+            <div id="modal-meta"></div>
+        </div>
+    </div>
+
+</div><!-- /page-content -->
+
+<!-- ========== ПОДВАЛ (HTML) ========== -->
+<div id="footer">
+    <div id="footer_first">
+        <h4>О проекте</h4>
+        <a href="FAQ.html">О нас</a>
+        <a href="FAQ.html">FAQ</a>
+        <a href="#">Партнеры</a>
+    </div>
+    <div id="footer_second">
+        <h4>Документы</h4>
+        <a href="#">Пользовательское соглашение</a>
+        <a href="#">Правила и условия</a>
+        <a href="#">Политика возврата</a>
+    </div>
+    <div id="footer_third">
+        <h4>Контакты</h4>
+        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=danielveselov28@gmail.com&su=Обратная%20связь&body=Здравствуйте!">Обратная связь</a>
+        <a href="https://t.me/pidepcasino" target="_blank">Telegram-канал</a>
+    </div>
+    <div id="footer_logo">
+        <a href="Main_page_PDEP.html"><div id="logo-text"><img id="logos" src="images/goldDEPlogo.svg" alt=""></div></a>
+    </div>
+</div>
+
+<script>
+// Данные для hero-новости
+const heroData = {
+    tag: 'Казино',
+    tagClass: 'tag-casino',
+    title: 'Мировой рынок онлайн-казино достиг $95 млрд в 2025 году',
+    body: 'По данным аналитического агентства Grand View Research, объём мирового рынка онлайн-гемблинга превысил 95 миллиардов долларов в 2025 году. Эксперты связывают рост с тремя ключевыми факторами: стремительным распространением мобильного интернета в развивающихся странах, легализацией онлайн-казино в новых юрисдикциях — в частности, в ряде штатов США и государств ЕС, — а также растущей популярностью криптовалютных ставок среди молодёжной аудитории. Наибольший рост зафиксирован в Азиатско-Тихоокеанском регионе: +41% год к году.',
+    date: '2 июня 2025',
+    src: 'GVR Analytics'
+};
+
+// Функции модального окна
+function openModal(data) {
+    const overlay = document.getElementById('modal-overlay');
+    if (!overlay) return;
+    const tagSpan = document.getElementById('modal-tag');
+    tagSpan.textContent = data.tag;
+    tagSpan.className = 'news-tag ' + (data.tagClass || '');
+    document.getElementById('modal-title').textContent = data.title;
+    document.getElementById('modal-body').textContent = data.body;
+    document.getElementById('modal-meta').innerHTML = `📅 ${data.date}${data.src ? ' · ' + data.src : ''}`;
+    overlay.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+    const overlay = document.getElementById('modal-overlay');
+    if (overlay) overlay.style.display = 'none';
+    document.body.style.overflow = '';
+}
+
+// Делаем глобальными
+window.openModal = openModal;
+window.closeModal = closeModal;
+window.heroData = heroData;
+
+// Данные для карточек
+const cardData = [
+    { tag: 'Спорт', tagClass: 'tag-sport', title: 'Ферстаппен выиграл Гран-при Лас-Вегаса и сократил отрыв', body: 'Макс Ферстаппен одержал победу на Гран-при Лас-Вегаса 2025 и догнал Ландо Норриса по очкам чемпионата — разрыв сократился до 24 очков. Гонка прошла при полных трибунах.', date: '25 ноября 2025', src: '' },
+    { tag: 'Крипто', tagClass: 'tag-crypto', title: 'Bitcoin-казино обработали ставок на $18 млрд за квартал', body: 'Согласно отчёту Blockchain Gaming Alliance, объём ставок в Bitcoin-казино вырос на 34% по сравнению с аналогичным периодом прошлого года.', date: '18 ноября 2025', src: 'Blockchain Gaming Alliance' },
+    { tag: 'Казино', tagClass: 'tag-casino', title: 'Live-казино с AR: новый формат игры появился в 5 крупных клубах', body: 'Evolution Gaming запустила первые столы с дополненной реальностью. Игроки могут видеть 3D-элементы поверх видеотрансляции крупье.', date: '10 ноября 2025', src: 'Evolution Gaming' },
+    { tag: 'PiDEP', tagClass: 'tag-pidep', title: 'PiDEP запускает новый формат турниров с призовым фондом $500 000', body: 'С 1 декабря 2025 года на платформе стартует серия еженедельных турниров по покеру и блэкджеку. Суммарный призовой фонд серии — полмиллиона долларов.', date: '5 ноября 2025', src: 'PiDEP Official' },
+    { tag: 'Казино', tagClass: 'tag-casino', title: 'Покерный турнир WSOP 2025: рекордные 12 000 участников', body: 'Главное событие World Series of Poker 2025 в Лас-Вегасе собрало рекордное количество участников. Призовой пул превысил $120 миллионов.', date: '1 ноября 2025', src: 'WSOP' },
+    { tag: 'Крипто', tagClass: 'tag-crypto', title: 'Ethereum-ставки легализованы в трёх новых странах ЕС', body: 'Польша, Чехия и Венгрия приняли законодательство, разрешающее азартные игры с использованием ETH и стейблкоинов.', date: '28 октября 2025', src: 'EU Gaming Commission' },
+    { tag: 'PiDEP', tagClass: 'tag-pidep', title: 'Обновление Pi-коинов: новые способы заработка на платформе', body: 'С обновлением 3.2 игроки могут зарабатывать Pi-коины не только за ставки, но и за достижения, просмотр обучающих материалов и участие в опросах.', date: '20 октября 2025', src: '' },
+    { tag: 'Спорт', tagClass: 'tag-sport', title: 'Ставки на киберспорт превысили $7 млрд — новый рекорд', body: 'Рынок ставок на киберспортивные дисциплины установил новый рекорд. Аналитики прогнозируют удвоение показателя к 2027 году.', date: '15 октября 2025', src: 'Esports Insider' },
+    { tag: 'Казино', tagClass: 'tag-casino', title: 'ИИ-крупье: первый автономный дилер появился в онлайн-казино', body: 'Стартап DealerAI представил полностью автономного виртуального крупье на базе нейросети. Дилер взаимодействует с игроками на 12 языках.', date: '8 октября 2025', src: 'DealerAI' }
+];
+
+// Привязываем клики к карточкам
+document.querySelectorAll('.news-card').forEach((card, idx) => {
+    if (idx < cardData.length) {
+        card.addEventListener('click', (e) => {
+            if (e.target.closest('.read-btn')) return;
+            openModal(cardData[idx]);
+        });
+    }
+});
+
+// Фильтры
+document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const cat = btn.dataset.cat;
+        document.querySelectorAll('.news-card').forEach(card => {
+            card.style.display = (cat === 'all' || card.dataset.cat === cat) ? '' : 'none';
+        });
+        const hero = document.getElementById('hero-news');
+        if (hero) hero.style.display = (cat === 'all' || hero.dataset.cat === cat) ? '' : 'none';
+    });
+});
+
+// Пагинация
+document.querySelectorAll('.page-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('.page-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('news-grid')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+});
+</script>
+</body>
+</html>

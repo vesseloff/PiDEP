@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Веселов Даниэль">
+    <meta name="description" content="Страница профиля PiDEP">
+    <title>PiDEP — Профиль</title>
+    <link rel="stylesheet" href="common.css">
+    <link rel="stylesheet" href="Account_page_PDEP.css">
+</head>
+<body>
+
+<audio id="suc" autoplay loop>
+    <source src="suc.mp3" type="audio/mpeg">
+    Ваш браузер не поддерживает встроенный звук.
+</audio>
+<script>
+    var audio = document.getElementById("suc");
+    audio.volume = 0.2;
+</script>
+
+<style>
+    #logos{
+    height: 100px;
+    width: 80px;
+    margin-top: 9px;
+}
+
+#logos2{
+    height: 150px;
+    width: 150px;
+}
+</style>
+
+<div class="page-content">
+<div id="account-grid">
+
+    <!-- ПРОФИЛЬ -->
+    <div id="profile">
+        <h1>Профиль</h1>
+        <!-- Аватар-плейсхолдер -->
+        <div id="avatar-placeholder">А</div>
+        <p id="id-label">ID: 12345678</p>
+
+        <div class="info-row"><span class="info-val">Андрей</span><span class="info-key">Имя</span></div>
+        <div class="info-row"><span class="info-val">Бурим</span><span class="info-key">Фамилия</span></div>
+        <div class="info-row"><span class="info-val">@Melstroy</span><span class="info-key">Никнейм</span></div>
+        <div class="info-row"><span class="info-val">+7 (999) 999-99-99</span><span class="info-key">Телефон</span></div>
+        <div class="info-row"><span class="info-val">Melstroy666@gmail.com</span><span class="info-key">Почта</span></div>
+        <div class="info-row"><span class="info-val">15/12/1998</span><span class="info-key">Дата рождения</span></div>
+
+        <a href="Sign_in_page_PDEP.html" class="logout-link">Выйти из аккаунта</a>
+    </div>
+
+    <!-- ОФОРМЛЕНИЕ -->
+    <div id="edit">
+        <h1>Оформление</h1>
+        <p class="standart">Персональный цвет</p>
+        <div id="colors">
+            <div class="per-color" id="c-gold"    title="Золото"   onclick="selectColor(this)"></div>
+            <div class="per-color" id="c-silver"  title="Серебро"  onclick="selectColor(this)"></div>
+            <div class="per-color" id="c-bronze"  title="Бронза"   onclick="selectColor(this)"></div>
+            <div class="per-color" id="c-blue"    title="Синий"    onclick="selectColor(this)"></div>
+            <div class="per-color" id="c-burgundy"title="Бордовый" onclick="selectColor(this)"></div>
+            <div class="per-color" id="c-green"   title="Зелёный"  onclick="selectColor(this)"></div>
+            <div class="per-color" id="c-purple"  title="Фиолетовый" onclick="selectColor(this)"></div>
+            <div class="per-color" id="c-orange"  title="Оранжевый" onclick="selectColor(this)"></div>
+        </div>
+        <p class="standart">Награды</p>
+        <div id="awards">
+            <div class="award" title="Первая победа">🏆</div>
+            <div class="award" title="10 игр">🎯</div>
+            <div class="award" title="Крупный выигрыш">💰</div>
+            <div class="award award-locked" title="Пока недоступно">🔒</div>
+            <div class="award award-locked" title="Пока недоступно">🔒</div>
+            <div class="award award-locked" title="Пока недоступно">🔒</div>
+        </div>
+    </div>
+
+    <!-- СТАТИСТИКА -->
+    <div id="statistics">
+        <h1>Статистика</h1>
+        <p class="standart">Победы</p>
+        <div class="per-stat"><p>70%</p></div>
+        <p class="standart">Средняя длина сессии</p>
+        <div class="per-stat"><p>47<br>мин</p></div>
+        <p class="standart">Средний размер ставки</p>
+        <div class="per-stat"><p>10$</p></div>
+        <p class="standart">Средний доход за месяц</p>
+        <div class="per-stat"><p>1079$</p></div>
+    </div>
+
+    <!-- БАЛАНС -->
+    <div id="balance">
+        <div id="balance-header">
+            <div id="bal-logo-text">Pi<span>DEP</span></div>
+            <h2>Ваш баланс</h2>
+        </div>
+        <div id="balance-body">
+            <div id="money">
+                <p id="money-amount">777'777'777</p>
+                <p id="money-cur">USD</p>
+            </div>
+            <div id="balance-info">
+                <div class="balance-card"><span>Номер счёта</span><strong>•••• •••• ••63</strong></div>
+                <div class="balance-card"><span>CVV/CVC</span><strong>•••</strong></div>
+                <a href="#"><button id="topup-btn">Пополнить</button></a>
+            </div>
+        </div>
+    </div>
+
+</div><!-- /account-grid -->
+</div><!-- /page-content -->
+
+<div id="footer"></div>
+
+<script>
+function selectColor(el) {
+    document.querySelectorAll('.per-color').forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+}
+</script>
+<script src="header.js"></script>
+</body>
+</html>

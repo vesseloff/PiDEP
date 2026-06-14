@@ -1,0 +1,131 @@
+/* ===== FAQ LAYOUT ===== */
+#faq-layout {
+    display: flex;
+    gap: 0;
+    width: 92%;
+    max-width: 1350px;
+    margin: 0 auto;
+}
+
+/* Боковое меню */
+#points {
+    width: 240px;
+    flex-shrink: 0;
+    position: sticky;
+    top: 130px;
+    height: fit-content;
+}
+.nav-title {
+    color: rgba(255,255,255,0.5);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+    padding-left: 8px;
+}
+.point {
+    display: block;
+    width: 220px;
+    background: rgba(255,255,255,0.08);
+    color: white;
+    border: none;
+    border-radius: 14px;
+    height: 46px;
+    font-size: 14px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    text-align: left;
+    padding: 0 16px;
+    transition: background 0.15s, box-shadow 0.15s;
+}
+.point:hover {
+    background: rgba(255,255,255,0.15);
+    box-shadow: 0 0 8px rgba(218,165,32,0.4);
+}
+
+/* Основной контент */
+#main {
+    margin-top: 50px;
+    flex: 1;
+    padding: 0 0 60px 48px;
+}
+
+h1 {
+    color: white;
+    font-size: 30px;
+    text-align: center;
+    margin-bottom: 40px;
+}
+h2 {
+    color: gold;
+    font-size: 20px;
+    margin: 60px 0 20px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(255,215,0,0.3);
+}
+h3 {
+    color: white;
+    font-size: 16px;
+    margin: 20px 0 8px;
+}
+p {
+    color: rgba(220,220,220,0.9);
+    font-size: 15px;
+    line-height: 1.7;
+    margin-bottom: 8px;
+}
+ul {
+    color: rgba(220,220,220,0.9);
+    margin-left: 24px;
+    margin-bottom: 12px;
+    font-size: 15px;
+    line-height: 1.9;
+}
+#main a {
+    color: rgb(84,201,255);
+}
+#main a:hover { text-decoration: underline; }
+
+/* Форма вопроса */
+#que-block {
+    margin-top: 60px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 20px;
+    padding: 28px;
+}
+#que-block h3 {
+    font-size: 18px;
+    margin-bottom: 16px;
+}
+#que-form {
+    display: flex;
+    gap: 12px;
+}
+#sent {
+    flex: 1;
+    height: 48px;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 14px;
+    color: white;
+    font-size: 16px;
+    padding: 0 18px;
+    outline: none;
+    transition: border-color 0.15s;
+}
+#sent::placeholder { color: rgba(255,255,255,0.4); }
+#sent:focus { border-color: gold; }
+#send {
+    height: 48px;
+    padding: 0 28px;
+    background: goldenrod;
+    border: none;
+    border-radius: 14px;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.15s;
+    white-space: nowrap;
+}
+#send:hover { background: gold; }

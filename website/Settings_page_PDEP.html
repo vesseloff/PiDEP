@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Веселов Даниэль">
+    <title>PiDEP — Настройки</title>
+    <link rel="stylesheet" href="common.css">
+    <link rel="stylesheet" href="Settings_page_PDEP.css">
+</head>
+<body>
+
+<audio id="suc" autoplay loop>
+    <source sarc="suc.mp3" type="audio/mpeg">
+    Ваш браузер не поддерживает встроенный звук.
+</audio>
+<script>
+    var audio = document.getElementById("suc");
+    audio.volume = 0.2;
+</script>
+
+<div class="page-content">
+<div id="main">
+
+    <h1>Настройки языка</h1>
+    <div class="lang-buttons">
+        <button class="lang active-lang" onclick="setLang(this,'ru')">🇷🇺 Русский</button>
+        <button class="lang" onclick="setLang(this,'en')">🇬🇧 English</button>
+    </div>
+
+    <h1>Часовой пояс</h1>
+    <select name="time" id="time">
+        <option>UTC −02:00 (Фернандо-де-Норонья)</option>
+        <option>UTC −01:00 (Прайя)</option>
+        <option>UTC +00:00 (Лондон, Лиссабон)</option>
+        <option>UTC +01:00 (Париж, Мадрид, Рим, Берлин)</option>
+        <option>UTC +02:00 (Афины, Каир, Иерусалим)</option>
+        <option selected>UTC +03:00 (Москва, Джидда)</option>
+        <option>UTC +04:00 (Дубай)</option>
+        <option>UTC +05:00 (Карачи)</option>
+        <option>UTC +06:00 (Дакка)</option>
+        <option>UTC +07:00 (Бангкок)</option>
+        <option>UTC +08:00 (Сингапур)</option>
+        <option>UTC +09:00 (Токио)</option>
+        <option>UTC +10:00 (Сидней)</option>
+    </select>
+
+    <h1>Уведомления</h1>
+    <div class="notif-list">
+        <label class="switch-container">
+            <div class="switch">
+                <input type="checkbox" id="sms-notif">
+                <span class="slider"></span>
+            </div>
+            <span class="label-text">SMS-уведомления</span>
+        </label>
+        <label class="switch-container">
+            <div class="switch">
+                <input type="checkbox" id="email-notif" checked>
+                <span class="slider"></span>
+            </div>
+            <span class="label-text">Email-уведомления</span>
+        </label>
+        <label class="switch-container">
+            <div class="switch">
+                <input type="checkbox" id="push-notif" checked>
+                <span class="slider"></span>
+            </div>
+            <span class="label-text">Push-уведомления</span>
+        </label>
+    </div>
+
+    <h1>Настройки звука</h1>
+
+    <div class="volume-row">
+        <span class="vol-label">🎵 Музыка в лобби</span>
+        <input type="range" id="vol-lobby" min="0" max="100" value="80" oninput="updateVol('lobby',this.value)">
+        <span class="vol-val" id="vol-lobby-val">80%</span>
+    </div>
+    <div class="volume-row">
+        <span class="vol-label">🎮 Музыка в игре</span>
+        <input type="range" id="vol-game" min="0" max="100" value="70" oninput="updateVol('game',this.value)">
+        <span class="vol-val" id="vol-game-val">70%</span>
+    </div>
+    <div class="volume-row">
+        <span class="vol-label">🔔 Звуковые эффекты</span>
+        <input type="range" id="vol-sfx" min="0" max="100" value="100" oninput="updateVol('sfx',this.value)">
+        <span class="vol-val" id="vol-sfx-val">100%</span>
+    </div>
+
+    <h1>Безопасность</h1>
+    <div class="security-block">
+        <button class="sec-btn" onclick="alert('Смена пароля — функция в разработке')">🔑 Сменить пароль</button>
+        <button class="sec-btn" onclick="alert('2FA — функция в разработке')">🛡️ Двухфакторная аутентификация</button>
+        <button class="sec-btn danger" onclick="if(confirm('Вы уверены?')) location.href='Sign_in_page_PDEP.html'">🚪 Выйти из аккаунта</button>
+    </div>
+
+</div>
+</div><!-- /page-content -->
+
+<div id="footer"></div>
+
+<script>
+function setLang(btn, lang) {
+    document.querySelectorAll('.lang').forEach(b => b.classList.remove('active-lang'));
+    btn.classList.add('active-lang');
+}
+function updateVol(key, val) {
+    document.getElementById('vol-' + key + '-val').textContent = val + '%';
+}
+</script>
+<script src="header.js"></script>
+</body>
+</html>

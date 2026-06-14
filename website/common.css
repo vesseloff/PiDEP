@@ -1,0 +1,222 @@
+/* ===== ОБЩИЙ СБРОС ===== */
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    height: 100%;
+    background: linear-gradient(to bottom, #800020 67%, #000000);
+    font-family: Arial, Helvetica, sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+a {
+    text-decoration: none;
+}
+
+/* ===== АНИМАЦИЯ НЕОНА ===== */
+@keyframes neon-blink {
+    0%, 100% { text-shadow: 0 0 5px gold, 0 0 10px gold, 0 0 15px gold; }
+    50%       { text-shadow: 0 0 10px gold, 0 0 20px gold, 0 0 40px gold; }
+}
+
+/* ===== ШАПКА ===== */
+#header {
+    height: 55px;
+    width: 90%;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.7);
+    background: goldenrod;
+    color: black;
+    margin: 10px 5%;
+    border-radius: 30px;
+    position: fixed;
+    top: 10px;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    z-index: 1000;
+    gap: 6px;
+}
+
+#logos{
+    height: 100px;
+    width: 80px;
+    margin-top: 9px;
+}
+
+#logos2{
+    height: 150px;
+    width: 150px;
+}
+
+/* Логотип SVG (текстовый) */
+#logo-text {
+    font-size: 22px;
+    font-weight: 900;
+    color: #800020;
+    letter-spacing: -1px;
+    cursor: pointer;
+    white-space: nowrap;
+    user-select: none;
+    flex-shrink: 0;
+    margin-right: 4px;
+}
+#logo-text span {
+    color: #000;
+}
+
+/* Кнопки шапки */
+.header-btn {
+    width: 36px;
+    height: 36px;
+    background: none;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: background 0.15s;
+    padding: 0;
+    position: relative;
+}
+.header-btn:hover {
+    background: rgba(255,255,255,0.35);
+}
+.header-btn svg {
+    width: 22px;
+    height: 22px;
+    fill: white;
+    pointer-events: none;
+}
+/* Активная страница */
+.header-btn.active {
+    background: rgba(255,255,255,0.25);
+}
+
+/* Поисковая строка */
+#searching {
+    flex: 1;
+    max-width: 300px;
+    height: 30px;
+    background: rgba(255,255,255,0.3);
+    border-radius: 20px;
+    border: 2px solid rgba(255,255,255,0.6);
+    padding: 0 14px;
+    font-size: 14px;
+    color: #000;
+    outline: none;
+    margin: 0 auto;
+}
+#searching::placeholder {
+    color: rgba(0,0,0,0.5);
+}
+#searching:focus {
+    background: rgba(255,255,255,0.5);
+    border-color: white;
+}
+
+/* Баланс в шапке */
+#header-balance {
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    white-space: nowrap;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+#header-balance:hover { color: #800020; }
+
+/* Pi-коин */
+#coin-btn {
+    width: 36px;
+    height: 36px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 20px;
+    transition: transform 0.2s;
+}
+#coin-btn:hover { transform: scale(1.15); }
+
+/* Tooltip */
+.header-btn[title]:hover::after {
+    content: attr(title);
+    position: absolute;
+    bottom: -32px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0,0,0,0.8);
+    color: white;
+    font-size: 11px;
+    padding: 3px 8px;
+    border-radius: 6px;
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 100;
+}
+
+/* ===== ПОДВАЛ ===== */
+#footer {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+    padding: 60px 0 40px;
+    margin-top: 80px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    flex-wrap: wrap;
+    gap: 20px;
+}
+#footer a {
+    color: rgb(84, 201, 255);
+    text-decoration: none;
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    transition: color 0.15s;
+}
+#footer a:hover {
+    text-decoration: underline;
+    color: gold;
+}
+#footer_first, #footer_second, #footer_third, #footer_logo {
+    margin: 0 30px;
+}
+#footer h4 {
+    color: rgba(255,255,255,0.5);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+}
+#footer_logo {
+    display: flex;
+    align-items: center;
+}
+#footer_logo .logo-text {
+    font-size: 28px;
+    font-weight: 900;
+    color: gold;
+    letter-spacing: -1px;
+    user-select: none;
+}
+#footer_logo .logo-text span { color: #fff; }
+
+/* ===== УТИЛИТЫ ===== */
+.page-content {
+    padding-top: 80px;
+}
